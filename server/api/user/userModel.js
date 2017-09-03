@@ -1,23 +1,27 @@
 // Require Mongoose
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // Require bcrpty to hash password
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 // Set Schema to mongoose Schema
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 // Create new Schema
-var UserSchema = new Schema({
-    username: {
+const UserSchema = new Schema({
+    googleId: {
         type: String,
         unique: true,
-        required: true
-    },
-    // dont store the password as plain text
-    password: {
-        type: String,
-        required: true
     }
+    // username: {
+    //     type: String,
+    //     unique: true,
+    //     required: true
+    // },
+    // // dont store the password as plain text
+    // password: {
+    //     type: String,
+    //     required: true
+    // }
 });
 
 // middleware that will run before a document
