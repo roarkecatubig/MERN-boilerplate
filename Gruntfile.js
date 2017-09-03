@@ -13,13 +13,13 @@ module.exports = function(grunt) {
             },
             pages: {
                 options: {
-                    remote: 'https://github.com/AaronMcCloskey/node-api.git',
+                    remote: 'https://github.com/AaronMcCloskey/MERN-boilerplate.git',
                     branch: 'gh-pages'
                 }
             },
             heroku: {
                 options: {
-                    remote: 'https://git.heroku.com/aaron-node-api.git',
+                    remote: 'https://git.heroku.com/mern-boilerplate-aaron.git',
                     branch: 'master',
                     tag: pkg.version
                 }
