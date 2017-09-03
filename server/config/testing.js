@@ -3,6 +3,6 @@ module.exports = {
     //   set db to localhost/dbname-test
     logging: false,
     db: {
-        url: 'mongodb://localhost/nodeblog-test'
+        url: 'mongodb://localhost/merndb-test'
     }
 };

@@ -5,6 +5,6 @@ module.exports = {
     seed: true,
     // set db to localhost/dbname
     db: {
-        url: 'mongodb://localhost/nodeblog'
+        url: 'mongodb://localhost/merndb'
     }
 };
