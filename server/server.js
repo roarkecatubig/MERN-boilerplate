@@ -1,17 +1,20 @@
 // Require express
-var express = require('express');
+const express = require('express');
 // Run express
-var app = express();
+const app = express();
 // Get api router
-var api = require('./api/api');
+const api = require('./api/api');
 // Get error handler
-var err = require('./middleware/err');
+const err = require('./middleware/err');
 // Require Logger for logging to console
-var logger = require('./util/logger');
+const logger = require('./util/logger');
 // Require auth router
-var auth = require('./auth/routes');
+const auth = require('./auth/routes');
 // Get config file
-var config = require('./config/config');
+const config = require('./config/config');
+// Require Passport for authentication and google OAuth
+const passport = require('passport');
+
 // db.url is different depending on NODE_ENV
 require('mongoose').connect(config.db.url, {
     useMongoClient: true,
@@ -29,6 +32,11 @@ require('./middleware/appMiddleware')(app);
 // setup the api and auth
 app.use('/api/', api);
 app.use('/auth', auth);
+
+// Initialise passport for Google OAuth
+app.use(passport.initialize());
+// Require passport file and run function to get user
+require('./util/passport')(passport);
 
 // set up global error handler
 app.use(err());
