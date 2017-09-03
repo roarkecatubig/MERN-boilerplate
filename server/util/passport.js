@@ -12,7 +12,25 @@ passport.use(new GoogleStrategy({
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
-    new User({
-        googleId: profile.id
-    }).save();
+    // Check user does not already exist
+    // Returns Promise, used in async code
+    User.findOne({ googleId: profile.id }).then((existingUser) => {
+        // if user exists
+        if (existingUser) {
+            // First argument is error, no error here so we pass null
+            // second argument we pass user record
+            done(null, existingUser);
+        } else {
+            // Add new user to db
+            // Async so we can only run done function when user has been added using then
+            new User({
+                    googleId: profile.id
+                })
+                .save()
+                .then(user =>
+                    // First argument is error, no error here so we pass null
+                    // second argument we pass user record)
+                    done(null, user))
+        }
+    })
 }));
