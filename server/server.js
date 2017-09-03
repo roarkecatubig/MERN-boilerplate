@@ -14,6 +14,8 @@ const auth = require('./auth/routes');
 const config = require('./config/config');
 // Require Passport for authentication and google OAuth
 const passport = require('passport');
+// Require passport file and run function to get user
+require('./util/passport')
 
 // db.url is different depending on NODE_ENV
 require('mongoose').connect(config.db.url, {
@@ -32,11 +34,6 @@ require('./middleware/appMiddleware')(app);
 // setup the api and auth
 app.use('/api/', api);
 app.use('/auth', auth);
-
-// Initialise passport for Google OAuth
-app.use(passport.initialize());
-// Require passport file and run function to get user
-require('./util/passport')(passport);
 
 // set up global error handler
 app.use(err());
