@@ -11,7 +11,7 @@ var config = {
     // 10 days in minutes
     expireTime: 24 * 60 * 10,
     secrets: {
-        jwt: process.env.JWT || 'gumball'
+        jwt: process.env.JWT || 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgEbVzfPnZPxfAyxqE'
     }
 };
 
