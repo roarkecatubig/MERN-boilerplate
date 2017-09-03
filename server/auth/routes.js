@@ -1,11 +1,11 @@
 // Require express router
-var router = require('express').Router();
+const router = require('express').Router();
 // Require verifyUser method from auth file
-var verifyUser = require('./auth').verifyUser;
+const verifyUser = require('./auth').verifyUser;
 // Require auth controller
-var controller = require('./controller');
+const controller = require('./controller');
 // Require Passport
-var passport = require('passport');
+const passport = require('passport');
 
 // before we send back a jwt, lets check
 // the password and username match what is in the DB
