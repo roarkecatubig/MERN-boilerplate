@@ -2,6 +2,10 @@
     "name": "mern-boilerplate",
     "version": "1.0.0",
     "description": "Boilerplate for mern stack",
+    "engines": {
+        "node": "6.9.2",
+        "npm": "4.1.1"
+    },
     "main": "index.js",
     "scripts": {
         "start": "nodemon index.js",
