@@ -1,5 +1,7 @@
 // Require node modules
 var _ = require('lodash');
+// Require keys file
+var keys = require('./keys');
 
 //Default config object for our api
 var config = {
@@ -11,7 +13,7 @@ var config = {
     // 10 days in minutes
     expireTime: 24 * 60 * 10,
     secrets: {
-        jwt: process.env.JWT || 'MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgEbVzfPnZPxfAyxqE'
+        jwt: process.env.JWT || keys.jwtSecret
     }
 };
 
