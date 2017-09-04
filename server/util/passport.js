@@ -128,7 +128,6 @@ module.exports = function(passport) {
             });
 
         }));
-    //////////////
 
     passport.use(new GoogleStrategy({
         clientID: keys.googleClientID,
