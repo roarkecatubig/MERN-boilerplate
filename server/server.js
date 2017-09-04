@@ -12,8 +12,6 @@ const logger = require('./util/logger');
 const auth = require('./auth/routes');
 // Get config file
 const config = require('./config/config');
-// Require Passport for authentication and google OAuth
-const passport = require('passport');
 // Require passport file and run function to get user
 require('./util/passport')
 
