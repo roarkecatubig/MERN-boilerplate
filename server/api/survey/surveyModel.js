@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // Set Schema to mongoose Schema
 const Schema = mongoose.Schema;
-const RecipientSchema = require('./Recipient');
+const RecipientSchema = require('./recipientModel');
 
 // Create new Schema
 const SurveySchema = new Schema({
