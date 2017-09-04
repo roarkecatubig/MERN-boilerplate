@@ -13,6 +13,7 @@
         "heroku": "grunt buildcontrol:heroku",
         "gh": "grunt buildcontrol:pages",
         "client": "npm run start --prefix client",
+        "build": "npm run build --prefix client",
         "dev": "concurrently \"npm run start\" \"npm run client\""
     },
     "author": "Aaron McCloskey",
