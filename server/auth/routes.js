@@ -1,15 +1,15 @@
 // Require express router
 const router = require('express').Router();
-// Require verifyUser method from auth file
-const verifyUser = require('./auth').verifyUser;
-// Require auth controller
-const controller = require('./controller');
 // Require Passport
 const passport = require('passport');
 
 // before we send back a jwt, lets check
 // the password and username match what is in the DB
-router.post('/signin', verifyUser(), controller.signin);
+router.post('/login', passport.authenticate('local-login', {
+    successRedirect: '/profile', // redirect to the secure profile section
+    failureRedirect: '/login', // redirect back to the signup page if there is an error
+    failureFlash: true // allow flash messages
+}));
 // Google OAuth, send request to google
 router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email']
@@ -17,7 +17,6 @@ router.get('/google', passport.authenticate('google', {
 // Retreive code from google OAuth
 router.get('/google/callback', passport.authenticate('google'));
 router.get('/logout', (req, res) => {
-    console.log(req.user);
     req.logout();
     res.send(req.user);
 });
