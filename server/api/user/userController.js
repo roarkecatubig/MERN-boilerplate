@@ -69,17 +69,17 @@ exports.put = function(req, res, next) {
         });
 };
 
-exports.post = function(req, res, next) {
-    var newUser = new User(req.body);
-    newUser.save(function(err, user) {
-        if (err) { return next(err); }
+// exports.post = function(req, res, next) {
+//     var newUser = new User(req.body);
+//     newUser.save(function(err, user) {
+//         if (err) { return next(err); }
 
-        // Sign token
-        var token = signToken(user._id);
-        // Pass token in json
-        res.json({ token: token });
-    });
-};
+//         // Sign token
+//         var token = signToken(user._id);
+//         // Pass token in json
+//         res.json({ token: token });
+//     });
+// };
 
 exports.delete = function(req, res, next) {
     var id = req.params.id;
