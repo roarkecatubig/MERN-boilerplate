@@ -8,6 +8,7 @@ var router = require('express').Router();
 router.use('/users', require('./user/userRoutes'));
 router.use('/categories', require('./category/categoryRoutes'));
 router.use('/posts', require('./post/postRoutes'));
+router.use('/surveys', require('./survey/surveyRoutes'));
 
 //Export Router to be used in server.js
 module.exports = router;
