@@ -22,7 +22,7 @@ Install node modules
  ```mongo```
 ## Setup Heroku
 1. Go to project directory, open terminal and run
- ```heroku create [projectname]``
+ ```heroku create [projectname]```
 
 ## .gitignore amendments
 
@@ -58,6 +58,26 @@ Go to
 1. Update name value
 2. Update description value
 3. Look at any packages that need updating
+
+## Google OAuth
+
+1. [Go here](https://console.developers.google.com)
+2. Click on dropdown top left
+3. Click '+' button to add new project
+4. Add new Project Name with `-dev` appended
+5. Click on dropdown top-left and select new project
+6. On Dashboard select Enable API's and Services
+7. Search for Google+ API and click on link
+8. Click Enable button
+9. Go to Credentials Tab
+10. On create credentials dropdown, select `oAuth Client ID`
+11. In next step, click `Configure Consent Screen`
+12. Add product name, (same name as project with -dev)
+13. At next step, select Web Application
+15. Authorized JavaScript origins = `http://localhost:5000`
+16. Authorized redirect URIs = `http://localhost:5000/auth/google/callback`
+17. Add client id to to keys file
+18. Add client secret to keys file
 
 ## App flow
 1. Starts in index.js
