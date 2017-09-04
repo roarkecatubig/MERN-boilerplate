@@ -134,6 +134,7 @@ module.exports = function(passport) {
         clientID: keys.googleClientID,
         clientSecret: keys.googleClientSecret,
         callbackURL: '/auth/google/callback',
+        proxy: true,
         passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
 
     }, (req, token, refreshToken, profile, done) => {
