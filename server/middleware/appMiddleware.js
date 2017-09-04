@@ -1,14 +1,12 @@
 // Morgan used for logging
-const morgan = require('morgan');
+var morgan = require('morgan');
 // Require node modules
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const override = require('method-override');
+var express = require('express');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+var override = require('method-override');
 // Require cookie session
 const cookieSession = require('cookie-session');
-// Require connect flash
-const flash = require('connect-flash');
 // Require Passport for authentication and google OAuth
 const passport = require('passport');
 // Require keys file
@@ -28,9 +26,9 @@ module.exports = function(app) {
             keys: [keys.cookieKey]
         })
     );
-    app.use(passport.initialize()); // Initialise passport for Google OAuth
+    // Initialise passport for Google OAuth
+    app.use(passport.initialize());
     app.use(passport.session());
-    app.use(flash()); // use connect-flash for flash messages stored in session
     // express.static will serve everything within client as a static resource
     // also, it will serve the index.html on the root of that directory on a GET to '/'
     // app.use(express.static('client'));

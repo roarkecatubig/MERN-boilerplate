@@ -8,7 +8,6 @@ var createRoutes = require('../../util/createRoutes');
 var logger = require('../../util/logger');
 // require auth file for auth methods
 var auth = require('../../auth/auth');
-var passport = require('passport');
 
 var checkUser = [
     // Check the user has valid token
@@ -27,11 +26,7 @@ router.param('id', controller.params);
 router.route('/')
     .get(controller.get)
     // no auth, users need to be able to sign up/login
-    .post(passport.authenticate('local-signup', {
-        successRedirect: '/profile', // redirect to the secure profile section
-        failureRedirect: '/signup', // redirect back to the signup page if there is an error
-        failureFlash: true // allow flash messages
-    }));
+    .post(controller.post)
 
 router.route('/:id')
     .get(controller.getOne)

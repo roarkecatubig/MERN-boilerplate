@@ -13,8 +13,7 @@ const auth = require('./auth/routes');
 // Get config file
 const config = require('./config/config');
 // Require passport file and run function to get user
-const passport = require('passport');
-require('./util/passport')(passport);
+require('./util/passport')
 
 // db.url is different depending on NODE_ENV
 require('mongoose').connect(config.db.url, {

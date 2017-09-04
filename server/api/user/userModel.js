@@ -2,43 +2,53 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 // Require bcrpty to hash password
-const bcrypt = require('bcrypt-nodejs');
+const bcrypt = require('bcrypt');
 // Set Schema to mongoose Schema
 const Schema = mongoose.Schema;
 
 // Create new Schema
 const UserSchema = new Schema({
-    local: {
-        email: String,
-        password: String,
-    },
-    google: {
-        id: String,
-        token: String,
-        email: String,
-        name: String
+    googleId: {
+        type: String,
+        unique: true,
     }
+    // username: {
+    //     type: String,
+    //     unique: true,
+    //     required: true
+    // },
+    // // dont store the password as plain text
+    // password: {
+    //     type: String,
+    //     required: true
+    // }
 });
 
-// // middleware that will run before a document
-// // is created
-// UserSchema.pre('save', function(next) {
+// middleware that will run before a document
+// is created
+UserSchema.pre('save', function(next) {
 
-//     if (!this.isModified('password')) return next();
-//     // encrypt password
-//     this.password = this.encryptPassword(this.password);
-//     next();
-// })
+    if (!this.isModified('password')) return next();
+    // encrypt password
+    this.password = this.encryptPassword(this.password);
+    next();
+})
 
 
 UserSchema.methods = {
     // check the passwords on signin
-    generateHash: function(password) {
-        return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    authenticate: function(plainTextPword) {
+        return bcrypt.compareSync(plainTextPword, this.password);
     },
     // hash the passwords
-    validPassword: function(password) {
-        return bcrypt.compareSync(password, this.local.password);
+    encryptPassword: function(plainTextPword) {
+        if (!plainTextPword) {
+            return ''
+        } else {
+            // generate salt and encrypt it
+            var salt = bcrypt.genSaltSync(10);
+            return bcrypt.hashSync(plainTextPword, salt);
+        }
     },
     toJson: function() {
         // converting document to object
