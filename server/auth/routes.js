@@ -16,5 +16,10 @@ router.get('/google', passport.authenticate('google', {
 }));
 // Retreive code from google OAuth
 router.get('/google/callback', passport.authenticate('google'));
+router.get('/logout', (req, res) => {
+    console.log(req.user);
+    req.logout();
+    res.send(req.user);
+});
 
 module.exports = router;
