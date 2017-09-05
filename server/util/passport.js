@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 // Require user model
 const User = mongoose.model('user');
 
-module.exports = function(passport) {
+module.exports = function (passport) {
 
     passport.serializeUser((user, done) => {
         done(null, user.id);
@@ -25,16 +25,16 @@ module.exports = function(passport) {
     // =========================================================================
 
     passport.use('local-login', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
-        function(req, email, password, done) { // callback with email and password from our form
+        // by default, local strategy uses username and password, we will override with email
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass back the entire request to the callback
+    },
+        function (req, email, password, done) { // callback with email and password from our form
 
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
-            User.findOne({ 'local.email': email }, function(err, user) {
+            User.findOne({ 'local.email': email }, function (err, user) {
                 // if there are any errors, return the error before anything else
                 if (err)
                     return done(err);
@@ -57,22 +57,20 @@ module.exports = function(passport) {
     // LOCAL SIGNUP ============================================================
     // =========================================================================
     passport.use('local-signup', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
-            usernameField: 'email',
-            passwordField: 'password',
-            passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
-        },
-        function(req, email, password, done) {
-            console.log(email);
-            console.log(password);
+        // by default, local strategy uses username and password, we will override with email
+        usernameField: 'email',
+        passwordField: 'password',
+        passReqToCallback: true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
+    },
+        function (req, email, password, done) {
             if (email)
                 email = email.toLowerCase(); // Use lower-case e-mails to avoid case-sensitive e-mail matching
 
             // asynchronous
-            process.nextTick(function() {
+            process.nextTick(function () {
                 // if the user is not already logged in:
                 if (!req.user) {
-                    User.findOne({ 'local.email': email }, function(err, user) {
+                    User.findOne({ 'local.email': email }, function (err, user) {
                         // if there are any errors, return the error
                         if (err)
                             return done(err);
@@ -84,11 +82,10 @@ module.exports = function(passport) {
 
                             // create the user
                             var newUser = new User();
-                            console.log(password);
                             newUser.local.email = email;
                             newUser.local.password = newUser.generateHash(password);
 
-                            newUser.save(function(err) {
+                            newUser.save(function (err) {
                                 if (err)
                                     return done(err);
 
@@ -101,7 +98,7 @@ module.exports = function(passport) {
                 } else if (!req.user.local.email) {
                     // ...presumably they're trying to connect a local account
                     // BUT let's check if the email used to connect a local account is being used by another user
-                    User.findOne({ 'local.email': email }, function(err, user) {
+                    User.findOne({ 'local.email': email }, function (err, user) {
                         if (err)
                             return done(err);
 
@@ -112,7 +109,7 @@ module.exports = function(passport) {
                             var user = req.user;
                             user.local.email = email;
                             user.local.password = user.generateHash(password);
-                            user.save(function(err) {
+                            user.save(function (err) {
                                 if (err)
                                     return done(err);
 
@@ -139,12 +136,12 @@ module.exports = function(passport) {
     }, (req, token, refreshToken, profile, done) => {
 
         // asynchronous
-        process.nextTick(function() {
+        process.nextTick(function () {
 
             // check if the user is already logged in
             if (!req.user) {
 
-                User.findOne({ 'google.id': profile.id }, function(err, user) {
+                User.findOne({ 'google.id': profile.id }, function (err, user) {
                     if (err)
                         return done(err);
 
@@ -156,7 +153,7 @@ module.exports = function(passport) {
                             user.google.name = profile.displayName;
                             user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                            user.save(function(err) {
+                            user.save(function (err) {
                                 if (err)
                                     return done(err);
 
@@ -173,7 +170,7 @@ module.exports = function(passport) {
                         newUser.google.name = profile.displayName;
                         newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                        newUser.save(function(err) {
+                        newUser.save(function (err) {
                             if (err)
                                 return done(err);
 
@@ -191,7 +188,7 @@ module.exports = function(passport) {
                 user.google.name = profile.displayName;
                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                user.save(function(err) {
+                user.save(function (err) {
                     if (err)
                         return done(err);
 
