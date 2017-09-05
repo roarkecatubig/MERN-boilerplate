@@ -57,14 +57,31 @@ exports.params = function (req, res, next, id) {
 // };
 
 exports.post = function (req, res, next) {
-    var newcategory = req.body;
+    // Set values from request body, in correct order
+    const { title, subject, body, recipients } = req.body;
+    const survey = new Survey({
+        // use ES6 syntax to define values
+        // no need to do title: title, subject: subject etc.
+        title,
+        subject,
+        body,
+        // Recipient is a sub-document is a little different
+        // Recipient is an array of objects
+        // recipients.split returns an array of strings
+        // map - for every email address with the property email with the value of trimmed email
+        recipients: recipients.split(',').map(email => ({ email: email.trim() })),
+        // Get the user creating the survey
+        _user: req.user.id,
+        dateSent: Date.now()
+    })
 
-    Category.create(newcategory)
-        .then(function (category) {
-            res.json(category);
-        }, function (err) {
-            next(err);
-        });
+
+    // Survey.create(newSurvey)
+    //     .then(function (survey) {
+    //         res.json(survey);
+    //     }, function (err) {
+    //         next(err);
+    //     });
 };
 
 // exports.delete = function(req, res, next) {
