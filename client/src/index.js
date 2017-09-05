@@ -1,8 +1,9 @@
+// Primary setup for all things redux inside application, render route component to DOM
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+// Import App component
+import App from './components/App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+// 1st argument = route component
+// 2nd argument = where we want to render that component to inside of DOM
+ReactDOM.render(<App />, document.querySelector('#root'));
