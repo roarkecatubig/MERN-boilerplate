@@ -7,6 +7,8 @@ const keys = require('../config/keys');
 const mongoose = require('mongoose');
 // Require user model
 const User = mongoose.model('user');
+// Require signToken method from auth file
+var signToken = require('../auth/auth').signToken;
 
 module.exports = function (passport) {
 
@@ -31,7 +33,6 @@ module.exports = function (passport) {
         passReqToCallback: true // allows us to pass back the entire request to the callback
     },
         function (req, email, password, done) { // callback with email and password from our form
-
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
             User.findOne({ 'local.email': email }, function (err, user) {
@@ -72,22 +73,23 @@ module.exports = function (passport) {
                 if (!req.user) {
                     User.findOne({ 'local.email': email }, function (err, user) {
                         // if there are any errors, return the error
-                        if (err)
+                        if (err) {
                             return done(err);
-
+                        }
                         // check to see if theres already a user with that email
                         if (user) {
                             return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
                         } else {
-
                             // create the user
                             var newUser = new User();
                             newUser.local.email = email;
                             newUser.local.password = newUser.generateHash(password);
 
-                            newUser.save(function (err) {
+                            newUser.save(function (err, user) {
                                 if (err)
                                     return done(err);
+                                // Sign token
+                                var token = signToken(user._id);
 
                                 return done(null, newUser);
                             });
@@ -109,10 +111,12 @@ module.exports = function (passport) {
                             var user = req.user;
                             user.local.email = email;
                             user.local.password = user.generateHash(password);
-                            user.save(function (err) {
+                            user.save(function (err, u) {
                                 if (err)
                                     return done(err);
 
+                                // Sign token
+                                var token = signToken(u._id);
                                 return done(null, user);
                             });
                         }
@@ -153,9 +157,11 @@ module.exports = function (passport) {
                             user.google.name = profile.displayName;
                             user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                            user.save(function (err) {
+                            user.save(function (err, u) {
                                 if (err)
                                     return done(err);
+                                // Sign token
+                                var token = signToken(u._id);
 
                                 return done(null, user);
                             });
@@ -170,9 +176,11 @@ module.exports = function (passport) {
                         newUser.google.name = profile.displayName;
                         newUser.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                        newUser.save(function (err) {
+                        newUser.save(function (err, user) {
                             if (err)
                                 return done(err);
+                            // Sign token
+                            var token = signToken(user._id);
 
                             return done(null, newUser);
                         });
@@ -188,9 +196,12 @@ module.exports = function (passport) {
                 user.google.name = profile.displayName;
                 user.google.email = (profile.emails[0].value || '').toLowerCase(); // pull the first email
 
-                user.save(function (err) {
+                user.save(function (err, u) {
                     if (err)
                         return done(err);
+
+                    // Sign token
+                    var token = signToken(u._id);
 
                     return done(null, user);
                 });
