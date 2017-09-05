@@ -1,7 +1,11 @@
 // Require Category Model
-var Survey = require('./surveyModel');
+const Survey = require('./surveyModel');
 // Require node modules
-var _ = require('lodash');
+const _ = require('lodash');
+// import survey template
+const surveyTemplate = require('../../util/emailTemplates/surveyTemplates');
+// import mailer
+const Mailer = require('../../util/Mailer');
 
 // Use params as middleware to look for any routes using 'id'
 // Find instances of id and add it to request object
@@ -73,8 +77,14 @@ exports.post = function (req, res, next) {
         // Get the user creating the survey
         _user: req.user.id,
         dateSent: Date.now()
-    })
+    });
 
+    // Send an email
+    // pass survey object
+    // pass survey to surveyTemplate
+    const mailer = new Mailer(survey, surveyTemplate(survey));
+    // Call async task, send()
+    mailer.send();
 
     // Survey.create(newSurvey)
     //     .then(function (survey) {
