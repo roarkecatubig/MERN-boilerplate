@@ -1,9 +1,13 @@
 //Set variable name for Router to be called in createRoutes utility
-var router = require('express').Router();
+const router = require('express').Router();
 // Require Controller
-var controller = require('./surveyController');
+const controller = require('./surveyController');
 // Require logger for logging to console
-var logger = require('../../util/logger');
+const logger = require('../../util/logger');
+// Check if user is logged in
+const requireLogin = require('../../middleware/requireLogin');
+// Check if user has enough credits
+const requireCredits = require('../../middleware/requireCredits');
 
 router.param('id', controller.params);
 
@@ -13,7 +17,7 @@ router.param('id', controller.params);
 router.route('/')
     // .get(controller.get)
     // no auth, users need to be able to sign up/login
-    .post(controller.post);
+    .post(requireLogin, requireCredits, controller.post);
 
 // router.route('/:id')
 //     .get(controller.getOne)
