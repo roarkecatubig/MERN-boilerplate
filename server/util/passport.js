@@ -1,6 +1,6 @@
 // Require Passport for authentication and google OAuth
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 // Require keys file
 const keys = require('../config/keys');
