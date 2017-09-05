@@ -7,6 +7,7 @@ var Schema = mongoose.Schema;
 // Create new Schema
 var RecipientSchema = new Schema({
     email: String,
+    // Default to false, do not need to set value when adding survey
     responded: { type: Boolean, default: false }
 });
 
