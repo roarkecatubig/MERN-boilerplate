@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 // Import header component
@@ -8,19 +8,25 @@ const SurveyNew = () => <h2>SurveyNew</h2>
 const Landing = () => <h2>Landing</h2>
 
 // create App component
-const App = () => {
+class App extends Component {
+    // Once component is rendered on screen, attempt load action creator for fetch user
+    componentDidMount() {
+
+    }
     // jsx
-    return (
-        <div className="container">
-            <BrowserRouter>
-                <div>
-                    <Header />
-                    <Route exact path="/" component={Landing} />
-                    <Route exact path="/surveys" component={Dashboard} />
-                    <Route path="/surveys/new" component={SurveyNew} />
-                </div>
-            </BrowserRouter>
-        </div>);
+    render() {
+        return (
+            <div className="container">
+                <BrowserRouter>
+                    <div>
+                        <Header />
+                        <Route exact path="/" component={Landing} />
+                        <Route exact path="/surveys" component={Dashboard} />
+                        <Route path="/surveys/new" component={SurveyNew} />
+                    </div>
+                </BrowserRouter>
+            </div>);
+    }
 };
 
 // Export App
