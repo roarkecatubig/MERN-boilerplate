@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+// import Payments component
+import Payments from './Payments';
 
 class Header extends Component {
     // Called from inside ul
@@ -17,7 +19,7 @@ class Header extends Component {
                 // If logged in pass data
                 return [
                     // Payments components
-                    // <li key="1"><Payments /></li>,
+                    <li key="1"><Payments /></li>,
                     // access credits of user
                     <li key="3" style={{ margin: '0 10px' }}>
                         Credits: {this.props.auth.credits}
