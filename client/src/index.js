@@ -1,4 +1,6 @@
 // Primary setup for all things redux inside application, render route component to DOM
+// Import materialize css
+import 'materialize-css/dist/css/materialize.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 // Import Provider tag
