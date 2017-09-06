@@ -15,7 +15,7 @@ router.param('id', controller.params);
 // All requests to '/api/router'
 // Go to relative controller and selected method
 router.route('/')
-    // .get(controller.get)
+    .get(controller.get)
     // no auth, users need to be able to sign up/login
     .post(requireLogin, requireCredits, controller.post);
 
@@ -26,7 +26,9 @@ router.route('/')
 //     // add auth, check if user to be deleted is current user
 //     .delete(checkUser, validUser, controller.delete)
 
-// // Add router for api/users/me
-// router.get('/me', checkUser, controller.me);
+router.get('/:surveyId/:choice', (req, res) => {
+    req.flash('selection', req.params.choice)
+    res.redirect('/api');
+});
 
 module.exports = router;

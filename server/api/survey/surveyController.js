@@ -29,14 +29,9 @@ exports.params = function (req, res, next, id) {
         });
 };
 
-// exports.get = function(req, res, next) {
-//     Category.find({})
-//         .then(function(categories) {
-//             res.json(categories);
-//         }, function(err) {
-//             next(err);
-//         });
-// };
+exports.get = function (req, res, next) {
+    res.send('Thanks for Voting');
+};
 
 // exports.getOne = function(req, res, next) {
 //     // req.category already added in params
@@ -60,7 +55,8 @@ exports.params = function (req, res, next, id) {
 //     })
 // };
 
-exports.post = function (req, res, next) {
+// Make async
+exports.post = async (req, res, next) => {
     // Set values from request body, in correct order
     const { title, subject, body, recipients } = req.body;
     const survey = new Survey({
@@ -83,8 +79,22 @@ exports.post = function (req, res, next) {
     // pass survey object
     // pass survey to surveyTemplate
     const mailer = new Mailer(survey, surveyTemplate(survey));
-    // Call async task, send()
-    mailer.send();
+    // all await statements inside try block
+    try {
+        // Call async task, send()
+        await mailer.send();
+        // async add survey to db
+        await survey.save();
+        // update users credits to remove 1
+        req.user.credits -= 1;
+        // async Update users details, set user to updated user
+        const user = await req.user.save();
+
+        res.send(user);
+    } catch (err) {
+        res.status(422).send(err);
+    }
+
 
     // Survey.create(newSurvey)
     //     .then(function (survey) {
