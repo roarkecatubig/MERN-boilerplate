@@ -29,10 +29,13 @@ class Header extends Component {
     }
 
     render() {
+        // If this.props.auth exists, link logo to /surveys otherwise to landing page
         return (
             <nav>
                 <div className="nav-wrapper">
-                    <a className="left brand-logo">MERN Boilerplate</a>
+                    <Link to={this.props.auth ? '/surveys' : '/'} className="left brand-logo">
+                        MERN BOILERPLATE
+                    </Link>
                     <ul className="right">
                         {this.renderContent()}
                     </ul>
