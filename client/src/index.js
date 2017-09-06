@@ -6,14 +6,15 @@ import ReactDOM from 'react-dom';
 // Import Provider tag
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
 // Import App component
 import App from './components/App';
 // Import all reducers
 import reducers from './reducers';
 
 // Use createStore helper to to create new instance of redux store
-// Arguments in createStore are all the reducers in application
-const store = createStore(reducers, {}, applyMiddleware());
+// Arguments in createStore are all the reducers in application and middlewares
+const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 // 1st argument = route component
 // 2nd argument = where we want to render that component to inside of DOM
