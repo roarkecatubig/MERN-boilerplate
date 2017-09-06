@@ -22,7 +22,12 @@ class Header extends Component {
         return (
             <nav>
                 <div className="nav-wrapper">
-                    Header
+                    <a className="left brand-logo">MERN Boilerplate</a>
+                    <ul className="right">
+                        <li>
+                            <a>Sign in with Google</a>
+                        </li>
+                    </ul>
                 </div>
             </nav>
         );
