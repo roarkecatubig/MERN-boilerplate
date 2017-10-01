@@ -1,5 +1,7 @@
 // Require express router
 const router = require('express').Router();
+// Require Controller
+var controller = require('./authController');
 // Require Passport
 const passport = require('passport');
 
@@ -15,10 +17,15 @@ router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
 // Retreive code from google OAuth
-router.get('/google/callback', passport.authenticate('google'));
-router.get('/logout', (req, res) => {
-    req.logout();
+router.get(
+    '/google/callback',
+    passport.authenticate('google'),
+    controller.redirect
+);
+router.get('/logout', controller.logout);
+router.get('/current_user', (req, res) => {
     res.send(req.user);
 });
+
 
 module.exports = router;

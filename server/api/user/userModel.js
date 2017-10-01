@@ -17,7 +17,8 @@ const UserSchema = new Schema({
         token: String,
         email: String,
         name: String
-    }
+    },
+    credits: { type: Number, default: 0 }
 });
 
 // // middleware that will run before a document
@@ -33,14 +34,14 @@ const UserSchema = new Schema({
 
 UserSchema.methods = {
     // check the passwords on signin
-    generateHash: function(password) {
+    generateHash: function (password) {
         return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
     },
     // hash the passwords
-    validPassword: function(password) {
+    validPassword: function (password) {
         return bcrypt.compareSync(password, this.local.password);
     },
-    toJson: function() {
+    toJson: function () {
         // converting document to object
         var obj = this.toObject();
         // delete password property to avoid sending back hashed password
